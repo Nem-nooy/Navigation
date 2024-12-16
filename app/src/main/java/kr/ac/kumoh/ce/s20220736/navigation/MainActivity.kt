@@ -7,9 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -48,9 +52,7 @@ fun MainScreen() {
         drawerContent = {
             DrawerSheet(drawerState) {
                 navController.navigate(it) {
-                    // 이미 화면이 스택에 있다면 새로 만들지 않고 기존 화면으로 이동
                     launchSingleTop = true
-                    popUpTo(it) { inclusive = true }
                 }
             }
         },
@@ -95,6 +97,12 @@ fun DrawerSheet(
                 scope.launch {
                     drawerState.close()
                 }
+            },
+            icon = {
+                Icon(
+                    Icons.Filled.Face,
+                    contentDescription = "screen1 icon"
+                )
             }
         )
         NavigationDrawerItem(
@@ -105,6 +113,12 @@ fun DrawerSheet(
                 scope.launch {
                     drawerState.close()
                 }
+            },
+            icon = {
+                Icon(
+                    Icons.Filled.Star,
+                    contentDescription = "screen2 icon"
+                )
             }
         )
     }
