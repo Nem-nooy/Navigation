@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerState
@@ -21,6 +22,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -68,7 +71,22 @@ fun MainScreen() {
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopBar(drawerState)
-            }
+            },
+            bottomBar = {
+                // BottomBar는 미관상 별로여서 주석 처리.
+//                BottomBar {
+//                    navController.navigate(it) {
+//                        launchSingleTop = true
+//                        popUpTo(it) { inclusive = true }
+//                    }
+//                }
+                BottomNavigationBar {
+                    navController.navigate(it) {
+                        launchSingleTop = true
+                        popUpTo(it) { inclusive = true }
+                    }
+                }
+            },
         ) { innerPadding ->
             // 위로 이동
             // val navController = rememberNavController()
@@ -87,6 +105,70 @@ fun MainScreen() {
             }
         }
     }
+}
+
+@Composable
+fun BottomNavigationBar(onNavigate: (String) -> Unit) {
+    NavigationBar {
+        NavigationBarItem(
+            label = {
+                Text("화면 1")
+            },
+            icon = {
+                Icon(
+                    Icons.Filled.Face,
+                    contentDescription = "screen1 icon"
+                )
+            },
+            selected = false,
+            onClick = {
+                onNavigate("screen1")
+            }
+        )
+        NavigationBarItem(
+            label = {
+                Text("화면 2")
+            },
+            icon = {
+                Icon(
+                    Icons.Filled.Star,
+                    contentDescription = "screen2 icon"
+                )
+            },
+            selected = false,
+            onClick = {
+                onNavigate("screen2")
+            }
+        )
+    }
+}
+
+@Composable
+fun BottomBar(onNavigate: (String) -> Unit) {
+    BottomAppBar(
+        actions = {
+            IconButton(
+                onClick = {
+                    onNavigate("screen1")
+                }
+            ) {
+                Icon(
+                    Icons.Filled.Face,
+                    contentDescription = "screen1 icon"
+                )
+            }
+            IconButton(
+                onClick = {
+                    onNavigate("screen2")
+                }
+            ) {
+                Icon(
+                    Icons.Filled.Star,
+                    contentDescription = "screen2 icon"
+                )
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
